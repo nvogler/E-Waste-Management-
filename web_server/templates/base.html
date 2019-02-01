@@ -1,0 +1,110 @@
+<html lang="en">
+	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+<div id="grad1">
+<head>
+    <title>Software Quality Audits</title>
+    <meta name="description" content="Audit Reporting Tool">
+</head>
+<body>
+	<nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
+		<span class="navbar-toggler-icon leftmenutrigger"></span>
+			<div class="text-white pt-3"><!-- abs-center-x -->
+				<nav class="breadcrumb">
+				{% for crumb in breadcrumbs %}
+					 <a class="breadcrumb-item text-white" href="{{crumb[1]}}">{{crumb[0]}}</a> 
+				{% endfor %}
+				</nav>
+			</div>
+		  <div class="collapse navbar-collapse" id="navbarText">
+
+			<ul class="navbar-nav animate side-nav">
+			  <li class="nav-item">
+				<a class="nav-link text-white" href="{{url_for('audit.audits_route')}}">Home</a>
+			  </li>
+			  {% if session['process_perms'] and session['process_perms'] % 5 == 0 %}
+			  <li class="nav-item">
+				<a class="nav-link text-white" href="{{url_for('audit.audits_route')}}?myaudits">My Audits</a>
+			  </li>
+			  <li class="nav-item text-white text-center">
+				-
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link text-white" href="{{url_for('audit.audit_add_route')}}">Schedule Audit</a>
+			  </li
+			  {% endif %}
+>
+			  {% if session['admin'] == 1 or (session['process_perms'] and session['process_perms'] % 3 == 0) %}
+			  <li class="nav-item text-white text-center">
+				-
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link text-white" href="{{url_for('admin.admin_route')}}">Admin Page</a>
+			  </li>
+			  {% endif %}
+			</ul>
+		</div>
+	<a class="text-white text-right" href="#">{{session['username']}}</a>
+	{% if session['username'] %}
+		<p>\t</p>
+		<button class="btn btn-sm text-center" onclick="logout();" id="logout_button">Logout</button>
+	{% else %}
+		<button class="btn btn-sm text-center" onclick="location.href = '{{url_for('admin.login')}}';" id="login_link">Login Page</button>
+	{% endif %}		+
+    </nav>
+ <div class="center">
+{% block content %}
+{% endblock %}
+ </div>
+  </body>
+<div class="modal fade" id="gen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div id="gen-modal-body" class="modal-body text-center"></div>
+		</div>
+	</div>
+</div>
+
+<script>
+jQuery(document).ready(function($) {
+     $('.leftmenutrigger').on('click', function(e) {
+		$('.side-nav').toggleClass("open");
+		e.preventDefault();
+    });
+	{% if (not (session['auditor'] == 1 and not aid)) and (aid and aid != session['userid']) and session['admin'] != 1 and session['lead'] != 1 %}
+		$("#input_form :input").prop("disabled", true);
+	{% endif %}
+});
+
+$('.type a').on('click', function(){
+    $('.type-opt').html($(this).html());    
+})
+$('.item a').on('click', function(){
+    $('.item-opt').html($(this).html());    
+})
+$('.field a').on('click', function(){    
+    $('.field-opt').html($(this).html());    
+})
+
+function logout() {
+	$.post('/api/v1/admin/logout').done(function (response) {
+		if (response['status'] == 1) {
+			window.location.replace("{{url_for('admin.login')}}");
+			
+			var div = document.getElementById('gen-modal-body');
+			div.innerHTML = 'Successfully logged out.';
+			$("#gen-modal").modal("show");
+		}
+		else {
+			var div = document.getElementById('gen-modal-body');
+			div.innerHTML = response['message'];
+			$("#gen-modal").modal("show");
+		}
+	});
+};
+
+</script>
+</html>
