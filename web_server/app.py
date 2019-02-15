@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, Blueprint, session, redirect
 from werkzeug.serving import run_simple
-import pythoncom
 import os
 import pypyodbc
 
