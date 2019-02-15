@@ -18,10 +18,13 @@ app.register_blueprint(API.admin_api)
 # Session key
 app.secret_key = os.urandom(24).hex()
 		
+# Globals
+app.config['UPLOAD_FOLDER'] = 'static/tmp/'
+
 @app.route('/')
 #@login_required
 def index():
-	return redirect('/login')
+	return render_template('/login')
 
 ######################################################
 # Listen on external IPs
