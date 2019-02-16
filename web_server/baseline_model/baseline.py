@@ -6,9 +6,9 @@ class BaselineClassifier:
 		self.model = model
 		self.net = model_zoo.get_model(self.model, pretrained=True)
 		
-	def classify_objects(self, file_name):
+	def classify_objects(self, file_name, data_folder, results_folder):
 		# Transform Image
-		x, img = data.transforms.presets.yolo.load_test(file_name, short=512)
+		x, img = data.transforms.presets.yolo.load_test(data_folder + file_name, short=512)
 		
 		# Classify
 		class_ids, scores, bounding_boxes = self.net(x)
@@ -20,6 +20,6 @@ class BaselineClassifier:
 								 class_ids[0],
 								 class_names=self.net.classes)
 		# Save
-		plt.savefig(file_name)
+		plt.savefig(results_folder + file_name)
 		
-		return file_name
+		return class_ids, scores, bounding_boxes#, ax
