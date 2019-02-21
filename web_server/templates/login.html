@@ -1,62 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-	<title> Home </title>
-	<header align="center">
-		<meta charset="UTF-8">
-		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
-	</header>
 
-<div class="container">
-  <div class="row">
-  <div class="col"></div><!--empty col-->
-  <div class="col-4">
-	<form name="login" action="/api/v1/admin/login" method="POST">
-	<div class = "card rounded"> 
-		<h3 class="card-header text-center">Login<h3>
-		<div class = "card-body">
-			<div class="row">
-				<div class="form-group col-sm-12">
-					<label class="card-label">MyID</label>
-					<input type="text" class="form-control card-item" id="username_input" name="username">
-				</div>
-			</div>
-			<div class="row">
-				<div class="form-group col-sm-12">
-					<label class="card-label">Password</label>
-					<input type="text" class="form-control card-item" id="password_input" name="password" disabled>
-				</div>
-			</div>
-			<div class="row text-center">
-				<div class=" col-md-12">
-					<button class="btn btn-info btn-sm form-control card-item text-center" onclick="userLogin();  return false;" id="login_button">Login</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	</form>
-  </div>
-  <div class="col"></div><!-- empty col-->
-  </div>
 
-<script>
-function userLogin() {
-	var data = { username: document.getElementById("username_input").value,
-				 password: document.getElementById("password_input").value };
-	$.post('/api/v1/admin/login', data).done(function (response) {
-		if (response['status'] == 1) {
-			window.location.replace("/audits");
-		}
-		else {
-			var div = document.getElementById('gen-modal-body');
-			div.innerHTML = 'Invalid username and password combination </br></br>' + response['message'];
-			$("#gen-modal").modal("show");
-		}
-	});
-};
-</script>
-	
-{% endblock %}
-
-{% block extrabodyscript %}
+      <form action = "http://localhost:8080/uploader" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>
 
 {% endblock %}
+

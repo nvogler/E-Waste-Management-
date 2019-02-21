@@ -1,7 +1,0 @@
-Anaconda3 5.3 (approved, SWR181714)
-pyad (approved, SWR161037)
-pywin32 (approved, SWR180421)
-pypyodbc
-
-
-docx-mailmerge
