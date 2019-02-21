@@ -70,7 +70,7 @@ def classifier():
 			classified_file = classifier.classify_objects(filename)
 
 			return render_template('upload.html',
-									filename=classified_file)
+									filename=filename)
 	return abort(403)
 	
 		
