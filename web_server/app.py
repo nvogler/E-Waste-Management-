@@ -23,11 +23,10 @@ app.config['UPLOAD_FOLDER'] = 'static/tmp/'
 @app.route('/')
 #@login_required
 def index():
-	return render_template('/login')
+	return redirect('/upload')
 
 ######################################################
 # Listen on external IPs
 if __name__ == '__main__':
-
-	run_simple('localhost', 8080, app, use_reloader=True, threaded=True)
+	app.run('localhost', port=80)
 
