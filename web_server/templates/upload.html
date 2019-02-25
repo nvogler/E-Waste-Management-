@@ -15,7 +15,27 @@
 			</div>
 					{% if filename %}
 						<div class="card rounded">
-							<h4 class="card-header text-center">Here's what we think..<h3>
+							<h4 class="card-header text-center">Here's what we found..<h3>
+							<div class = "card-body">
+								<div class="row">
+									<div class="col"></div><!--empty col-->
+									<div class="col-4">
+									{% for class in classes %}
+										<p>{{ class [0] }}</p>
+									{% endfor %}
+									</div>
+									<div class="col-4">
+									{% for class in classes %}
+										{% if class[1] %}
+											<p> E-Waste! </p>
+										{% else %}
+											<p> Not E-Waste. </p>
+										{% endif %}
+									{% endfor %}
+									</div>
+									<div class="col"></div><!--empty col-->
+								</div>
+							</div>
 							<div class = "card-body">
 								<img src="{{ filename }}">
 							</div>

@@ -11,26 +11,6 @@ from baseline import BaselineClassifier
 
 admin_api = Blueprint('admin_api', __name__)
 
-@admin_api.route('/api/v1/admin/queryUserDetails', methods=['GET', 'POST'])
-def getUserADInfoFromEmail():
-
-	# Clean input
-	email = request.args.get('email').lower().strip()
-
-	# Run Query
-	try:
-		qry = adquery.ADQuery()
-		qry.execute_query(attributes=["extensionAttribute6", "givenName", "sn"], where_clause="mail = '" + email + "'")
-		result = qry.get_all_results()[0]
-		result['status'] = 1
-		
-	except:
-		result = {}
-		result['status'] = 0
-		
-	finally:
-		return jsonify(result)
-
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
@@ -67,9 +47,10 @@ def classifier():
 			
 			# Classify
 			classifier = BaselineClassifier()
-			classified_file = classifier.classify_objects(filename)
+			classes = classifier.classify_objects(filename)
 
 			return render_template('upload.html',
+									classes=classes,
 									filename=filename)
 	return abort(403)
 	
