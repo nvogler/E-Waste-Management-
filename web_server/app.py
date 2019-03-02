@@ -28,5 +28,6 @@ def index():
 ######################################################
 # Listen on external IPs
 if __name__ == '__main__':
-	app.run('0.0.0.0', port=80)
+	run_simple('localhost', 8080, app, use_reloader=True)
+	#app.run('0.0.0.0', port=80)
 
