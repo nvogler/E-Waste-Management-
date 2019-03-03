@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">		
+	<div class="row">
+		<div class="col"></div><!--empty col-->
+		<div class="col-8">
+			<div class="card rounded">
+				<h4 class="card-header text-center">Upload An Image</h4>
+				<div class = "card-body">
+					<form action = "{{ url_for('upload.classifier') }}" method = "POST" enctype = "multipart/form-data">
+						<input type = "file" name = "file" />
+						<input type = "submit"/>
+					</form>
+				</div>
+			</div>
+					{% if filename %}
+						<div class="card rounded">
+							<h4 class="card-header text-center">Here's what we found..</h4>
+							<div class = "card-body">
+								<div class="row">
+									<div class="col"></div><!--empty col-->
+									<div class="col-4">
+									{% for class in classes %}
+										<p>{{ class [0] }}</p>
+									{% endfor %}
+									</div>
+									<div class="col-4">
+									{% for class in classes %}
+										{% if class[1] %}
+											<p> E-Waste! </p>
+										{% else %}
+											<p> Not E-Waste. </p>
+										{% endif %}
+									{% endfor %}
+									</div>
+									<div class="col"></div><!--empty col-->
+								</div>
+							</div>
+							<div class = "card-body">
+								<img src="{{ filename }}">
+							</div>
+						</div>
+						<div class="card rounded">
+							<h4 class="card-header text-center">Check out nearby e-waste recycling centers below</h4>
+							<div class = "card-body">
+								<iframe
+								  frameborder="0" style="position: relative; height: 100%; width: 100%;"
+								  src="https://www.google.com/maps/embed/v1/place?key=AIzaSyD_RgMHzey_BlDSRmQophbqDltJ_bH8qd8&q=e-waste+recycling" allowfullscreen>
+								</iframe>
+							</div>
+						</div>
+					{% endif %}
+
+		</div>
+		<div class="col"></div><!-- empty col-->
+		</div>
+	</div>
+</div>
+{% endblock %}
+

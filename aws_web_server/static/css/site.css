@@ -1,0 +1,104 @@
+body { 
+    padding-top: 60px; 
+	/* The image used */
+	/*background-image: url("../images/ewaste.jpg");*/
+
+	/* Full height */
+	height: 100%;
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+	background-size: cover;
+}
+html {
+	/* Full height */
+	height: 100%;
+	overflow-y: scroll!important;
+}
+body.modal-open {
+    width: 100% !important;
+    padding-right: 0 !important;
+}
+
+
+#wrapper{padding:90px 15px;}
+.navbar-expand-lg .navbar-nav.side-nav{flex-direction: column;}
+.card{margin-bottom: 15px; border-radius:0; box-shadow: 0 3px 5px rgba(0,0,0,.1); }
+.header-top{box-shadow: 0 3px 5px rgba(0,0,0,.1)}
+.leftmenutrigger{display: none}
+@media(min-width:992px) {
+.leftmenutrigger{display: block;display: block;margin: 7px 20px 4px 0;cursor: pointer;}
+#wrapper{padding: 90px 15px 15px 15px; }
+.navbar-nav.side-nav.open {left:0;}
+.navbar-nav.side-nav{background: rgba(0,0,0,0.8);box-shadow: 2px 1px 2px rgba(0,0,0,.1);position:fixed;top:56px;flex-direction: column!important;left:-220px;width:200px;overflow-y:auto;bottom:0;overflow-x:hidden;padding-bottom:40px}
+}
+.animate{-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;transition:all .3s ease-in-out}
+
+.bg-dark {
+	background: rgba(0, 0, 0, 0.8)!important;
+}
+.navbar {
+	max-height: 40px;
+}
+.breadcrumb {
+	background: rgba(0, 0, 0, 0)!important;
+}
+
+/*
+input[type="radio"] {
+    -ms-transform: scale(1.25); /* IE 9
+    -webkit-transform: scale(1.25);  Chrome, Safari, Opera
+    transform: scale(1.25);
+	margin: 10px 100px 10px 45px;
+}
+*/
+.form-radio-label {
+	font-size: 20px;
+    
+    margin-left: 50px !important;
+    text-indent: 0px !important;
+}
+.abs-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.right {
+    text-align: right;
+}
+.top-y {
+    position: absolute;
+    top: 1%;
+}
+.col-centered {
+    float: none;
+    margin: 0 auto;
+}
+.card-label {
+	font-size: 18px;
+}
+.card-item {
+	font-size: 14px;
+}
+.table th {
+   text-align: center;   
+}
+.table td {
+	text-align: center;   
+	display:table-cell;
+	white-space: nowrap;
+	overflow:hidden;
+	text-overflow: ellipsis;
+}
+
+.fixed-height-500 {
+	max-height:100px;
+	overflow-y:auto;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: #87CEFA;
+  cursor: pointer;
+}

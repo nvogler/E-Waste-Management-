@@ -1,0 +1,18 @@
+<html lang="en">
+	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+	
+	<head>
+		<title>E-Waste Management</title>
+		<meta name="description" content="Image Classifier">
+	</head>
+	<body>
+		 <div class="center">
+			{% block content %}
+			{% endblock %}
+		</div>
+	</body>
+</html>
