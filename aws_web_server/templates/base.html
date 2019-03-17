@@ -1,18 +1,93 @@
 <html lang="en">
 	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
+	<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
 	
 	<head>
 		<title>E-Waste Management</title>
 		<meta name="description" content="Image Classifier">
 	</head>
+	
+	<div id="gen-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div id="gen-modal-body" class="modal-body">
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="text-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div id="text-modal-body"class="modal-body text-center"></div>
+			</div>
+		</div>
+	</div>
+
 	<body>
+		<nav class="navbar header-top fixed-top navbar-expand-lg navbar-light" style="background-color: rgba(152, 251, 152,0.9);">
+		<span class="navbar-toggler-icon leftmenutrigger"></span>
+		 <div class="collapse navbar-collapse" id="navbarText">
+			<ul class="navbar-nav animate side-nav">
+			  <li class="nav-item">
+				<a class="nav-link text-dark text-center" href="#">Home</a>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link text-dark text-center" href="#">About</a>
+			  </li>
+			</ul>
+		</div>
+		<a class="text-dark text-right" href="#"><span style="padding-right: 10px;">{{session['name']}}<span></a>
+
+		{% if session['userid'] %}
+			<button class="btn btn-sm text-center btn-light" onclick="logout();" id="logout_button">Logout</button>
+		{% else %}
+			<button class="btn btn-sm text-center btn-light" onclick="location.href = '{{url_for('admin.login')}}';" id="login_link">Login Page</button>
+		{% endif %}		
+		</nav>
+	
 		 <div class="center">
 			{% block content %}
 			{% endblock %}
 		</div>
 	</body>
 </html>
+
+<script>
+jQuery(document).ready(function($) {
+     $('.leftmenutrigger').on('click', function(e) {
+		$('.side-nav').toggleClass("open");
+    });
+});
+$('.type a').on('click', function(){
+    $('.type-opt').html($(this).html());    
+})
+$('.item a').on('click', function(){
+    $('.item-opt').html($(this).html());    
+})
+$('.field a').on('click', function(){    
+    $('.field-opt').html($(this).html());    
+})
+
+function logout() {
+	$.post("{{url_for('admin_api.logout')}}").done(function (response) {
+		if (response['status'] == 1) {
+			window.location.replace("{{url_for('admin.login')}}");
+			
+			var div = document.getElementById('gen-modal-body');
+			div.innerHTML = 'Successfully logged out.';
+			$("#gen-modal").modal("show");
+		}
+		else {
+			var div = document.getElementById('gen-modal-body');
+			div.innerHTML = response['message'];
+			$("#gen-modal").modal("show");
+		}
+	});
+};
+</script>

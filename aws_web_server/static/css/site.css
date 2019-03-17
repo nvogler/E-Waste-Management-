@@ -5,7 +5,7 @@ body {
 
 	/* Full height */
 	height: 100%;
-
+	background-color: #f8f8ff;
 	/* Center and scale the image nicely */
 	background-position: center;
 	background-repeat: no-repeat;
@@ -17,24 +17,59 @@ html {
 	height: 100%;
 	overflow-y: scroll!important;
 }
-body.modal-open {
-    width: 100% !important;
-    padding-right: 0 !important;
+
+#wrapper{
+	padding:90px 15px;
 }
-
-
-#wrapper{padding:90px 15px;}
-.navbar-expand-lg .navbar-nav.side-nav{flex-direction: column;}
-.card{margin-bottom: 15px; border-radius:0; box-shadow: 0 3px 5px rgba(0,0,0,.1); }
-.header-top{box-shadow: 0 3px 5px rgba(0,0,0,.1)}
-.leftmenutrigger{display: none}
+.navbar-expand-lg .navbar-nav.side-nav{
+	flex-direction: column;
+}
+.card{
+	margin-bottom: 15px; 
+	border-radius:0; 
+	box-shadow: 0 3px 5px rgba(0,0,0,.1); 
+}
+.header-top{
+	box-shadow: 0 3px 5px rgba(0,0,0,.1)
+}
+.leftmenutrigger{
+	display: none
+}
 @media(min-width:992px) {
-.leftmenutrigger{display: block;display: block;margin: 7px 20px 4px 0;cursor: pointer;}
-#wrapper{padding: 90px 15px 15px 15px; }
-.navbar-nav.side-nav.open {left:0;}
-.navbar-nav.side-nav{background: rgba(0,0,0,0.8);box-shadow: 2px 1px 2px rgba(0,0,0,.1);position:fixed;top:56px;flex-direction: column!important;left:-220px;width:200px;overflow-y:auto;bottom:0;overflow-x:hidden;padding-bottom:40px}
+	.leftmenutrigger{
+		display: block;
+		display: block;
+		margin: 7px 20px 4px 0;
+		cursor: 
+		pointer;
+	}
 }
-.animate{-webkit-transition:all .3s ease-in-out;-moz-transition:all .3s ease-in-out;-o-transition:all .3s ease-in-out;-ms-transition:all .3s ease-in-out;transition:all .3s ease-in-out}
+#wrapper{
+	padding: 90px 15px 15px 15px; 
+}
+.navbar-nav.side-nav.open {
+	left:0;
+}
+.navbar-nav.side-nav{
+	background: rgba(152, 251, 152,0.8);
+	box-shadow: 2px 1px 2px rgba(0,0,0,.1);
+	position:fixed;
+	top:40px;
+	flex-direction: column!important;
+	left:-120px;
+	width:100px;
+	overflow-y:auto;
+	bottom:0;
+	overflow-x:hidden;
+	padding-bottom:40px
+}
+.animate{
+	-webkit-transition:all .3s ease-in-out;
+	-moz-transition:all .3s ease-in-out;
+	-o-transition:all .3s ease-in-out;
+	-ms-transition:all .3s ease-in-out;
+	transition:all .3s ease-in-out
+}
 
 .bg-dark {
 	background: rgba(0, 0, 0, 0.8)!important;
@@ -42,18 +77,6 @@ body.modal-open {
 .navbar {
 	max-height: 40px;
 }
-.breadcrumb {
-	background: rgba(0, 0, 0, 0)!important;
-}
-
-/*
-input[type="radio"] {
-    -ms-transform: scale(1.25); /* IE 9
-    -webkit-transform: scale(1.25);  Chrome, Safari, Opera
-    transform: scale(1.25);
-	margin: 10px 100px 10px 45px;
-}
-*/
 .form-radio-label {
 	font-size: 20px;
     
