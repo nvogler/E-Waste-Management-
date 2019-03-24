@@ -1,7 +1,7 @@
 from flask import Flask, request, Blueprint, session, jsonify, redirect, abort, current_app as app
 import os
 import sqlite3
-
+from datetime import datetime
 upload_api = Blueprint('upload_api', __name__, template_folder='templates')
 
 
@@ -16,13 +16,17 @@ def update_item():
 		response = {}
 		try:
 			id = int(request.form['id'])
-			dispo_date = request.form['dispo_date']
-			
+			if str(request.form['dispo_val']) == '1':
+				dispo_date = datetime.now().date()
+			else:
+				dispo_date = None
+			notes = request.form['notes_val']
+			print (notes)
 			exec_string = """
-			UPDATE Items SET DateDisposed = ? WHERE ID = ?
+			UPDATE Items SET DateDisposed = ?, Notes = ? WHERE ID = ?
 			"""
 			
-			cursor.execute(exec_string, [dispo_date, id])
+			cursor.execute(exec_string, [dispo_date, notes, id])
 			conn.commit()
 
 			response['status'] = 1

@@ -35,10 +35,22 @@
 		 <div class="collapse navbar-collapse" id="navbarText">
 			<ul class="navbar-nav animate side-nav">
 			  <li class="nav-item">
-				<a class="nav-link text-dark text-center" href="#">Home</a>
+				<a class="nav-link text-dark text-center" href="/">Home</a>
 			  </li>
 			  <li class="nav-item">
-				<a class="nav-link text-dark text-center" href="#">About</a>
+				<a class="nav-link text-dark text-center" href="{{ url_for('admin.about') }}">About</a>
+			  </li>
+			  <li class="nav-item text-center">
+				<span> - </span>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link text-dark text-center" href="{{ url_for('upload.user_classifier') }}">Your Recycling</a>
+			  </li>
+			  <li class="nav-item text-center">
+				<span> - </span>
+			  </li>
+			  <li class="nav-item">
+				<a class="nav-link text-dark text-center" href="{{ url_for('upload.community_classifier') }}">Community Efforts</a>
 			  </li>
 			</ul>
 		</div>
@@ -63,6 +75,8 @@ jQuery(document).ready(function($) {
      $('.leftmenutrigger').on('click', function(e) {
 		$('.side-nav').toggleClass("open");
     });
+	
+	$('.side-nav').toggleClass("open");
 });
 $('.type a').on('click', function(){
     $('.type-opt').html($(this).html());    

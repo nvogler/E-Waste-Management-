@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+	<title> Home </title>
+	<header align="center">
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</header>
+
+<div class="container">
+	<div class="row">
+	  <div class="col"></div><!--empty col-->
+	    <div class="col-sm-6">
+			<div class="card rounded">
+				<h4 class="card-header text-center">E-Waste Recycling Resources</h4>
+				<div class = "card-body text-center">
+					<a href="https://sfenvironment.org/recycle-household-batteries">Battery Disposal</a>
+					<br>
+					<a href="https://sfenvironment.org/light-bulb-disposal-in-sf">Light Bulb Disposal</a>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col"></div><!--empty col-->
+	</div>
+</div>
+<script>
+function userLogin() {
+	var data = { login: document.getElementById("login_input").value,
+				 pin: document.getElementById("pin_input").value };
+	$.post("{{url_for('admin_api.login')}}", data).done(function (response) {
+		if (response['status'] == 1) {
+			window.location.replace("/");
+		}
+		else {
+			var div = document.getElementById('gen-modal-body');
+			div.innerHTML = 'Invalid login/pin combination. </br></br>' + response['message'];
+			$("#gen-modal").modal("show");
+		}
+	});
+};
+</script>
+	
+{% endblock %}

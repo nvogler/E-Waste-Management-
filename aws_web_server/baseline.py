@@ -30,12 +30,12 @@ class BaselineClassifier:
 		classes = []
 		for j in range(len(class_ids.asnumpy())):
 			for k in range(len(class_ids.asnumpy()[j])):
-				if scores.asnumpy()[j][k] > 0.5:
-					if class_ids.asnumpy()[j][k] >= 62 and class_ids.asnumpy()[j][k] < 68:
+				if scores.asnumpy()[j][k] > 0.4:
+					if class_ids.asnumpy()[j][k] >= 62 and class_ids.asnumpy()[j][k] < 73:
 						e_waste = True
 					else:
 						e_waste = False
-					classes.append((self.net.classes[int(class_ids.asnumpy()[j][k])], e_waste))
+					classes.append((self.net.classes[int(class_ids.asnumpy()[j][k])], e_waste, int(class_ids.asnumpy()[j][k])))
 					#print (scores.asnumpy()[j][k])
 					#print (net.classes[int(class_ids.asnumpy()[j][k])])
 

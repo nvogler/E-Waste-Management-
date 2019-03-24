@@ -11,3 +11,7 @@ def login():
 		return render_template("login.html")
 	else:
 		return redirect ('/classifier')
+		
+@admin.route('/about', methods = ['GET'])
+def about():
+	return render_template("about.html")

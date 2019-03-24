@@ -5,27 +5,33 @@
 		<div class="col-2"></div>
 		<div class="col-8">
 			<div class="card rounded">
-				<h4 class="card-header text-center">Add Item</h4>
-				<div class="card-body d-flex justify-content-center">
-					<form action = "{{ url_for('upload.classifier') }}" method = "POST" enctype = "multipart/form-data">
-						<div class="row">
-							<div class="col-6">
-								<label class="card-label">Upload an Image</label>
-								<input type = "file" name = "file" />
+				{% if not community %}
+					<h4 class="card-header text-center">Add Item</h4>
+					<div class="card-body d-flex justify-content-center">
+						<form action = "{{ url_for('upload.user_classifier') }}" method = "POST" enctype = "multipart/form-data">
+							<div class="row">
+								<div class="col-6">
+									<label class="card-label">Upload an Image</label>
+									<input type = "file" name = "file" />
+								</div>
+								<div class="col-6">
+									<label class="card-label">Notes</label>
+									<textarea class="form-control" id="notes_input" name="notes" maxlength="255"></textarea>
+								</div>
 							</div>
-							<div class="col-6">
-								<label class="card-label">Notes</label>
-								<textarea class="form-control" id="notes_input" name="notes" maxlength="255"></textarea>
+							<div class="row"><div class="col"><br></div></div>
+							<div class="row">
+								<div class="col-12 d-flex justify-content-center">
+									<input type = "submit"/>
+								</div>
 							</div>
-						</div>
-						<div class="row"><div class="col"><br></div></div>
-						<div class="row">
-							<div class="col-12 d-flex justify-content-center">
-								<input type = "submit"/>
-							</div>
-						</div>
-					</form>
-				</div>
+						</form>
+					</div>
+				{% else %}
+					<h4 class="card-header text-center">Viz Here</h4>
+					<div class="card-body d-flex justify-content-center">
+					</div>
+				{% endif %}
 			</div>
 		</div>
 		<div class="col-2"></div>
@@ -33,7 +39,7 @@
 	<div class="row">
 		<div class="col-12">		
 			<div class="card rounded">
-				<h4 class="card-header text-center">E-Waste History</h4>
+				<h4 class="card-header text-center">{% if community %} Community Efforts {% else %} Your E-Waste History {% endif %}</h4>
 				<div class = "card-body">
 					<table id="dataTable" class="table table-bordered table-striped w-100 ">
 						<thead>
@@ -55,9 +61,14 @@
 									<td><img style="max-width: 50px; max-height: 100%;" onclick='fullImg("{{item[1]}}")' src="{{item[1]}}"></td>
 									<td>{{item[2]}}</td>
 									<td>{{item[3]}}</td>
-									<td><input type="date" id="{{item[0]}}_dispo_date"{% if item[4] %} value="{{item[4]}}" {% endif %}></input></td>
+									<td>
+										<input id="{{item[0]}}_dispo_val" type='hidden' {% if item[4] %} value=1 {% endif %} name='dispo_val'>
+										<input id="{{item[0]}}_dispo_input" class="form-control text-center" type='checkbox' {% if item[4] %} checked {% endif %}>
+									</td>
 									<td>{{item[5]}}</td>
-									<td>{% if item[6] %} {{item[6]}} {% endif %}</td>
+									<td>
+										<textarea class="form-control" id="{{item[0]}}_notes_input" name="notes" rows="1" maxlength="255">{% if item[6] %} {{item[6]}} {% endif %}</textarea>
+									</td>
 									<td><input type="button" class="btn btn-info btn-sm" onclick='updateItem("{{item[0]}}")' value="Update"/></td>
 								</tr>
 							{% endfor %}
@@ -125,8 +136,14 @@ function fullImg(img_src) {
 }
 
 function updateItem(id) {
+	var dispo_val = 0;
+	if ($('#' + id.toString() + '_dispo_input')[0].checked == true) {
+		dispo_val = "1";
+	}
+	
 	var data = { id: id,
-				 dispo_date: $('#' + id.toString() + '_dispo_date').val() }; 
+				 dispo_val: dispo_val,
+				 notes_val: $('#' + id.toString() + '_notes_input').val()}; 
 	
 	$.post("{{url_for('upload_api.update_item')}}", data).done(function (response) {
 		if (response['status'] == 1) {

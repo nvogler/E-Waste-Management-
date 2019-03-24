@@ -26,7 +26,7 @@ application.config['UPLOAD_FOLDER'] = 'static/uploads/'
 @application.route('/')
 def index():
 	if 'userid' in session:
-		return redirect('/classifier')
+		return redirect('/user_classifier')
 	else:
 		return redirect('/login')
 
