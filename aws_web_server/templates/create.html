@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% block content %}
+	<title> Home </title>
+	<header align="center">
+		<meta charset="UTF-8">
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	</header>
+
+<div class="container">
+  <div class="row">
+  <div class="col"></div><!--empty col-->
+  <div class="col-6">
+	<form name="createAccount" method="POST">
+	<div class = "card rounded"> 
+		<h3 class="card-header text-center">Create Account<h3>
+		<div class = "card-body">
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label class="card-label">First Name</label>
+					<input type="text" maxlength="50" class="form-control card-item" id="fname_input" name="fname" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label class="card-label">Last Name</label>
+					<input type="text" maxlength="50" class="form-control card-item" id="lname_input" name="lname" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-12">
+					<label class="card-label">City</label>
+					<input type="text" maxlength="50" class="form-control card-item" id="city_input" name="city" required>
+				</div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label class="card-label">State</label>
+					<input type="text" maxlength="25" class="form-control card-item" id="state_input" name="state" required>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="card-label">Zip</label>
+					<input type="number" maxlength="5" class="form-control card-item" id="zip_input" name="zip" required>
+				</div>
+			</div>		
+			<br>
+			<div class="row text-center">
+				<div class="col-sm-3"></div>
+				<div class="form-group col-sm-6">
+					<label class="card-label">User Name</label>
+					<input type="text" maxlength="50" class="form-control card-item" id="uname_input" name="uname" required>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+			<div class="row">
+				<div class="form-group col-sm-6">
+					<label class="card-label">Password</label>
+					<input type="password" minlength="4" maxlength="12" class="form-control card-item" id="pw_input" name="pw" required>
+				</div>
+				<div class="form-group col-sm-6">
+					<label class="card-label">Confirm Password</label>
+					<input type="password" maxlength="8" class="form-control card-item" id="pw_conf_input" name="pw_conf" required>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class="col-sm-12">
+				<p class="validator" id="validate-status"></p>
+				</div>
+			</div>
+			<div class="row text-center">
+				<div class=" col-md-3"></div>
+				<div class=" col-md-6">
+					<button class="btn btn-success btn-sm form-control card-item text-center" onclick="create();  return false;" id="create_button">Create Account</button>
+				</div>
+				<div class=" col-md-3"></div>
+			</div>
+		</div>
+	</div>
+	</form>
+  </div>
+  <div class="col"></div><!-- empty col-->
+  </div>
+</div>
+<script>
+$(document).ready(function () {
+   $("#pw_input, #pw_conf_input").keyup(checkPasswordMatch);
+});
+
+function checkPasswordMatch() {
+    var password = $("#pw_input").val();
+    var confirmPassword = $("#pw_conf_input").val();
+
+    if (password != confirmPassword) {
+		$("#validate-status").text("Passwords do not match.");
+	}
+	else if (password.length < 4) {
+		$("#validate-status").text("Passwords must be at least 4 characters.");
+	}
+	else {
+		$("#validate-status").text("");
+		return true;
+	}
+	return false;
+}
+
+function create() {
+	if (checkPasswordMatch()) {
+	
+		var data = { uname: document.getElementById("uname_input").value,
+					 fname: document.getElementById("fname_input").value,
+					 lname: document.getElementById("lname_input").value,
+					 city: document.getElementById("city_input").value,
+					 state: document.getElementById("state_input").value,
+					 zip: document.getElementById("zip_input").value,
+					 pw: document.getElementById("pw_input").value };
+		$.post("{{url_for('admin_api.create_account')}}", data).done(function (response) {
+			if (response['status'] == 0) {
+				var div = document.getElementById('gen-modal-body');
+				div.innerHTML = '<p>Account created successfully. Redirecting...</p>';
+				$("#gen-modal").modal("show");
+				window.location.replace("/user_classifier");
+			}
+			else {
+				var div = document.getElementById('gen-modal-body');
+				div.innerHTML = 'Unable to create account. Please try again later.</br></br>' + response['message'];
+				$("#gen-modal").modal("show");
+			}
+		});
+	}
+}
+</script>
+	
+{% endblock %}

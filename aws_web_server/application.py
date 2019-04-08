@@ -1,5 +1,5 @@
 from flask import Flask, redirect, session
-import sqlite3
+import pymysql
 from waitress import serve
 import os
 
@@ -21,9 +21,18 @@ application.register_blueprint(API.admin_api)
 
 # Globals
 application.config['UPLOAD_FOLDER'] = 'static/uploads/'
-#application.config['CONNECTION'] = sqlite3.connect("ewaste_data.db")
 
-@application.route('/')
+host="w210-e-waste.cah8dllkneeh.us-east-2.rds.amazonaws.com"
+port=3306
+dbname="w210ewaste"
+user="ewasteadmin"
+password="admin12345"
+
+conn = pymysql.connect(host, user=user,port=port,
+                           passwd=password, db=dbname)
+application.config['CONNECTION'] = conn
+
+@application.route('/index')
 def index():
 	if 'userid' in session:
 		return redirect('/user_classifier')
@@ -33,4 +42,5 @@ def index():
 ######################################################
 # Listen on external IPs
 if __name__ == '__main__':
-    serve(application)
+    #serve(application)
+	application.run(debug=True)

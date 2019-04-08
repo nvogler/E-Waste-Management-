@@ -20,10 +20,11 @@ def community_classifier():
 		return redirect('/login')
 		
 	# Link with DB
-	conn = sqlite3.connect("ewaste_data.db")
+	conn = app.config['CONNECTION']
 	cursor = conn.cursor()
 	
 	classes = None
+	ret_classes = []
 	filename = None
 	scroll = None
 
@@ -44,12 +45,12 @@ def community_classifier():
 				if class_[1]:
 					# Scroll down to image div on page load
 					scroll = True
+					ret_classes.append(class_)
 					
 					# Insert Image to DB
 					exec_string = """
-					Insert INTO Items (DateAdded, Image, User, Type, Notes) VALUES (?, ?, ?, ?, ?);
+					Insert INTO Items (DateAdded, Image, User, Type, Notes) VALUES (%s, %s, %s, %s, %s);
 					"""
-					print (class_)
 					cursor.execute(exec_string, [datetime.now().date(), filename, int(session['userid']), class_[2], notes])
 					conn.commit()
 		
@@ -62,7 +63,7 @@ def community_classifier():
 			DateDisposed,
 			dt.Type,
 			Notes,
-			u.FirstName + " " + u.LastName AS User
+			CONCAT(u.FirstName," ",u.LastName) AS User
 	FROM Items AS i
 	INNER JOIN 
 		Users AS u ON u.ID = i.User
@@ -71,11 +72,12 @@ def community_classifier():
 	INNER JOIN 
 		DisposalTypes AS dt ON dt.ID = it.DisposalType
 	"""
-	items = cursor.execute(exec_string).fetchall()
+	cursor.execute(exec_string)
+	items = cursor.fetchall()
 	
 	return render_template('upload.html',
 							items=items,
-							classes=classes,
+							classes=ret_classes,
 							scroll=scroll,
 							community=True,
 							filename=filename)
@@ -86,10 +88,11 @@ def user_classifier():
 		return redirect('/login')
 		
 	# Link with DB
-	conn = sqlite3.connect("ewaste_data.db")
+	conn = app.config['CONNECTION']
 	cursor = conn.cursor()
 	
 	classes = None
+	ret_classes = []
 	filename = None
 	scroll = None
 
@@ -110,12 +113,13 @@ def user_classifier():
 				if class_[1]:
 					# Scroll down to image div on page load
 					scroll = True
+					ret_classes.append(class_)
 					
 					# Insert Image to DB
 					exec_string = """
-					Insert INTO Items (DateAdded, Image, User, Type, Notes) VALUES (?, ?, ?, ?, ?);
+					Insert INTO Items (DateAdded, Image, User, Type, Notes) VALUES (%s, %s, %s, %s, %s);
 					"""
-					print (class_)
+					
 					cursor.execute(exec_string, [datetime.now().date(), filename, int(session['userid']), class_[2], notes])
 					conn.commit()
 		
@@ -128,7 +132,7 @@ def user_classifier():
 			DateDisposed,
 			dt.Type,
 			Notes,
-			u.FirstName + " " + u.LastName AS User
+			CONCAT(u.FirstName," ",u.LastName) AS User
 	FROM Items AS i
 	INNER JOIN 
 		Users AS u ON u.ID = i.User
@@ -136,13 +140,14 @@ def user_classifier():
 		ItemTypes AS it ON it.ID = i.Type
 	INNER JOIN 
 		DisposalTypes AS dt ON dt.ID = it.DisposalType
-	WHERE i.User = ?
+	WHERE i.User = %s
 	"""
-	items = cursor.execute(exec_string, [ session['userid'] ]).fetchall()
+	cursor.execute(exec_string, [ session['userid'] ])
+	items = cursor.fetchall()
 	
 	return render_template('upload.html',
 							items=items,
-							classes=classes,
+							classes=ret_classes,
 							scroll=scroll,
 							community=False,
 							filename=filename)

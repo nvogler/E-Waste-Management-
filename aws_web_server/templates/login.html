@@ -22,8 +22,8 @@
 			</div>
 			<div class="row">
 				<div class="form-group col-sm-12">
-					<label class="card-label">PIN</label>
-					<input type="text" class="form-control card-item" id="pin_input" name="pin">
+					<label class="card-label">Password</label>
+					<input type="password" class="form-control card-item" id="pin_input" name="pin">
 				</div>
 			</div>
 			<div class="row text-center">
@@ -44,7 +44,7 @@ function userLogin() {
 				 pin: document.getElementById("pin_input").value };
 	$.post("{{url_for('admin_api.login')}}", data).done(function (response) {
 		if (response['status'] == 1) {
-			window.location.replace("/");
+			window.location.replace("/user_classifier");
 		}
 		else {
 			var div = document.getElementById('gen-modal-body');

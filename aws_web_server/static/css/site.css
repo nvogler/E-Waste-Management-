@@ -12,6 +12,12 @@ body {
     background-attachment: fixed;
 	background-size: cover;
 }
+
+p.validator {
+	font-size: 12px;
+	color: red;
+}
+
 html {
 	/* Full height */
 	height: 100%;

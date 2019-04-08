@@ -1,7 +1,7 @@
 <html lang="en">
-	<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-	<script src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/site.css') }}">
@@ -68,7 +68,17 @@
 			{% endblock %}
 		</div>
 	</body>
+	
+<div class="modal fade" id="gen-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div id="gen-modal-body" class="modal-body text-center"></div>
+		</div>
+	</div>
+</div>
+
 </html>
+
 
 <script>
 jQuery(document).ready(function($) {

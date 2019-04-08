@@ -2,6 +2,7 @@ from gluoncv import model_zoo, data, utils
 from matplotlib import pyplot as plt
 
 class BaselineClassifier:
+	#def __init__(self, model='faster_rcnn_resnet101_v1d_coco'):
 	def __init__(self, model='yolo3_darknet53_coco'):
 		self.model = model
 		self.net = model_zoo.get_model(self.model, pretrained=True)
